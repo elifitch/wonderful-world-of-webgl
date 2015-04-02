@@ -1,0 +1,19 @@
+{
+  "name": "wonderful-world-of-webgl",
+  "version": "0.0.0",
+  "description": "Learning about WebGL",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "threejs": "*",
+    "threex.windowresize": "*"
+  }
+}
