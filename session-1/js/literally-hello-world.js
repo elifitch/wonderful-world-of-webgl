@@ -9,6 +9,8 @@ var camera;
 
 init();
 
+createObjects();
+
 animate();
 
 function init() {
@@ -32,6 +34,22 @@ function init() {
 
   // Finally, we use threex to handle window resizing
   THREEx.WindowResize(renderer, camera);
+}
+
+function createObjects() {
+  var sunLight = new THREE.DirectionalLight(0xEDD9AD, 1);
+  sunLight.position.set(125, 0, 60);
+
+  var ambientLight = new THREE.AmbientLight(0x919191);
+
+  var worldGeo = new THREE.SphereGeometry(10, 32, 32);
+  // var worldMat = new THREE.MeshNormalMaterial();
+  var worldMat = new THREE.MeshLambertMaterial({color: 0x0C9DEB});
+  var world = new THREE.Mesh(worldGeo, worldMat);
+
+  scene.add(ambientLight);
+  scene.add(sunLight);
+  scene.add(world);
 }
 
 function animate() {
