@@ -6,6 +6,7 @@ var containter;
 var renderer;
 var scene;
 var camera;
+var world;
 
 init();
 
@@ -37,15 +38,15 @@ function init() {
 }
 
 function createObjects() {
-  var sunLight = new THREE.DirectionalLight(0xEDD9AD, 1);
+  var sunLight = new THREE.DirectionalLight(0xE8B954, 1);
   sunLight.position.set(125, 0, 60);
 
-  var ambientLight = new THREE.AmbientLight(0x919191);
+  var ambientLight = new THREE.AmbientLight(0xC9C9C9);
 
   var worldGeo = new THREE.SphereGeometry(10, 32, 32);
-  // var worldMat = new THREE.MeshNormalMaterial();
-  var worldMat = new THREE.MeshLambertMaterial({color: 0x0C9DEB});
-  var world = new THREE.Mesh(worldGeo, worldMat);
+  var worldTexture = THREE.ImageUtils.loadTexture('img/earth-8k.jpg');
+  var worldMat = new THREE.MeshLambertMaterial({map: worldTexture});
+  world = new THREE.Mesh(worldGeo, worldMat);
 
   scene.add(ambientLight);
   scene.add(sunLight);
@@ -54,6 +55,8 @@ function createObjects() {
 
 function animate() {
   requestAnimationFrame(animate);
+
+  world.rotation.y += 0.003;
 
   renderer.render(scene, camera);
 }
