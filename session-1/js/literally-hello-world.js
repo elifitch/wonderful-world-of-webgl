@@ -15,6 +15,8 @@ function init() {
 
   //First, we create the essential pieces to run a webgl experiemce: a renderer, scene & camera
   renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( window.innerWidth, window.innerHeight );
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
 
