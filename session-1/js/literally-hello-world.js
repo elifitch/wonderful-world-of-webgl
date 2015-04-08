@@ -152,7 +152,7 @@ function createObjects() {
 
   var worldGeo = new THREE.SphereGeometry(10, 32, 32);
   var worldTexture = THREE.ImageUtils.loadTexture('img/earth-8k.jpg');
-  var worldMat = new THREE.MeshPhongMaterial({map: worldTexture});
+  var worldMat = new THREE.MeshLambertMaterial({map: worldTexture});
   world = new THREE.Mesh(worldGeo, worldMat);
 
   // Finally we just add the lights and the world to the scene.
