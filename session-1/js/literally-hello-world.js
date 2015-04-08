@@ -6,6 +6,7 @@ var containter;
 var renderer;
 var scene;
 var camera;
+var controls;
 var world;
 
 init();
@@ -26,6 +27,8 @@ function init() {
   scene.add(camera);
   camera.position.set(0, 0, -50);
   camera.lookAt(scene.position);
+
+  controls = new THREE.OrbitControls(camera);
 
   //Then, we create a container, add the container to body, and add the renderer to the container
   container = document.createElement('div');
@@ -57,6 +60,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   world.rotation.y += 0.003;
+  controls.update();
 
   renderer.render(scene, camera);
 }
