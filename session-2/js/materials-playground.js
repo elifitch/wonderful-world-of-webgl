@@ -22,7 +22,10 @@ var sceneProperties = {
   ambient: 0x171717,
   hemiSky: 0xC8C8C8,
   hemiGround: 0x333333,
-  hemiIntensity: 1
+  hemiIntensity: 1,
+  dirLightColor: 0xFFE79B,
+  dirLightIntensity: 1,
+  landscapeVisible: false
 }
 
 
@@ -39,6 +42,7 @@ function init() {
   renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setClearColor(0x70B5EF);
 
   document.body.appendChild(renderer.domElement);
 
@@ -58,7 +62,7 @@ function init() {
 function createObjects() {
   var lightContainer = new THREE.Object3D();
   var lightSphere = new THREE.Mesh(new THREE.SphereGeometry(1,6,6), new THREE.MeshBasicMaterial());
-  dirLight = new THREE.DirectionalLight(0xFFE79B, 1);
+  dirLight = new THREE.DirectionalLight(sceneProperties.dirLightColor, sceneProperties.dirLightIntensity);
   lightContainer.position.set(125, 0, 60);
   lightContainer.add(lightSphere);
   lightContainer.add(dirLight);
@@ -68,7 +72,8 @@ function createObjects() {
 
   hemiLight = new THREE.HemisphereLight(sceneProperties.hemiSky, sceneProperties.hemiGround, sceneProperties.hemiIntensity);
 
-  var objectGeo = new THREE.IcosahedronGeometry(10);
+  // var objectGeo = new THREE.IcosahedronGeometry(10);
+  var objectGeo = new THREE.SphereGeometry(10, 32, 32);
   var objectMat = new THREE.MeshPhongMaterial();
   objectMat.color.setHex(sceneProperties.color);
   objectMat.shading = sceneProperties.shading;
@@ -78,11 +83,12 @@ function createObjects() {
 
   var loader = new THREE.ColladaLoader();
   loader.load('obj/mountain-scene-water.dae', function(collada){
+    // loader.load('obj/redds.dae', function(collada){
     landscape = collada.scene;
     landscape.rotation.x = -Math.PI / 2;
     landscape.position.y = -40;
     landscape.scale.set(20, 20, 20);
-    landscape.visible = false;
+    landscape.visible = sceneProperties.landscapeVisible;
     scene.add(landscape)
   })
 
@@ -146,6 +152,13 @@ function buildGui() {
   sceneFolder.add(sceneProperties, 'hemiIntensity', 0, 5).onChange(function(val){
     hemiLight.intensity = sceneProperties.hemiIntensity;
   });
+  sceneFolder.addColor(sceneProperties, 'dirLightColor').onChange(function(val){
+    dirLight.color.setHex(sceneProperties.dirLightColor);
+  });
+
+  sceneFolder.add(sceneProperties, 'landscapeVisible').onChange(function(val){
+    landscape.visible = sceneProperties.landscapeVisible;
+  });
 }
 
 function updateObject() {
@@ -161,7 +174,7 @@ function animate() {
 
   controls.update();
 
-  object.rotation.y += 0.01
+  // object.rotation.y += 0.01
 
   renderer.render(scene, camera);
 }

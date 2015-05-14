@@ -1,1 +1,67 @@
 https://assignments-dot-udacity-extras.appspot.com/classes/cs291/demo/unit3/04
+
+fancy specular
+http://www.realtimerendering.com/erich/udacity/exercises/unit3_clamp_solution.html
+
+tesselation, flat/smooth, per vert/per pix shading!!
+http://www.realtimerendering.com/erich/udacity/exercises/unit3_shader_demo.html
+
+the above with a teapot!!!
+http://www.realtimerendering.com/erich/udacity/exercises/unit3_sharp_highlight.html
+
+cartoon shading
+http://www.realtimerendering.com/erich/udacity/exercises/unit3_toon_solution.html
+
+
+Outline:
+How do you see anything
+How does the eye/camera work. Frustum, etc.
+How does light work in the real world?
+Can we compute light the same way? No.
+How do we simplify things to render stuff? Render pipeline, etc.
+If we're just talking about drawing colored pixels the the screen, lets talk about light and color, lets talk about matls.
+Light in scene and the material interact to determine how an object appears.
+Light on a diffuse sphere.
+Shading normals and smooth shading.
+Specular material.
+Goraud vs Phong Shading. Phong interpolates vertex normal per pixel
+Lets play!
+Next time: Geometry and transforms.
+
+
+
+
+Course Notes:
+
+We're going to talk about materials, which at the core is just how the program decides which color belongs where.
+Think about how your eye works. Here's an apple. How do you know the apple is there, how do you know it's red.
+
+All the photons in this room are bouncing around and hitting your eye.
+
+Maybe a camera, not an eye.
+
+We're basically going to do the same thing, but we can't simulate every photon, it'd be too much computation. In fact, to trace a room with 10 40 watt bulbs in it, we'd need about one hundred thousand earth's worth of computers to do it. So we need to figure out a simpler way.
+
+So we reverse the process. Plotting from the camera out rather than from the scene in. Cast a ray from the camera out into the scene, if that ray hits and object, you compute the effect of light on that pixel, and project that result to the screen. This very simplified, but it gives you an idea. Also backface culling.
+
+The render pipeline: 3d objects sent to gpu, turned into triangles, the vertices are modified (a bouncing ball does its bounce for that frame), gpu decides if in view of camera, if not, that object is ignored, the ones that are in the frustum are rasterized and projected on the screen. All these calculations happen in parallel b/c gpus are badass.
+
+3d's job is to find how much light comes from each part of the scene and what color that light is?
+
+
+
+
+Picture a scene w/ a ball in it, and a single light. How does the light and color interact to make the ball look real?  You combine the emissive (in reality, is just a constant, it doesn't really emit like a light), amb (fudge factor, these two set separate), diffuse (matte color), specular (shine) together.  Emissive, amb on a per object basis, diffuse is per light, specular is per light and changes based on view.
+
+Diffuse scatters light in all directions above plan according to cosine of angle of surface compared to the camera, balanced by the fact that the more direct you view the surface, the more area you observe, so the more light you get. Super technical, but what it means is that the angle you view it from doesn't matter.
+
+How do we make a shape made of a bunch of tris look smooth?  Shading normal vs geometric normal.  Shading normals use one of a few methods under the hood to average the geometric normals into something to make the surface appear smooth.
+
+
+
+
+Lets talk about shiny stuff.
+
+They look different when you look at them from different angles.
+
+We'll only be touching on phong shading, not gouraud shading or other types of shiny shading, b/c it's the most common type.  You can look at these guys with some resources I'll provide later.  It interpolates the color across a triangle, and computes shading per pixel.  It's more intensive but it looks le nice.
