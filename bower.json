@@ -14,6 +14,7 @@
   ],
   "dependencies": {
     "threejs": "*",
-    "threex.windowresize": "*"
+    "threex.windowresize": "*",
+    "gsap": "~1.16.1"
   }
 }
