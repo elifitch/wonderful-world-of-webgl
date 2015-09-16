@@ -110,6 +110,28 @@ function createObjects() {
   // our scene.
 
   //////////////////////////
+  //      3D Object       //
+  //////////////////////////
+
+  // Now we get to make our world 3d object. Every 3d object is made of two
+  // components: a geometry and a material. In the broadest of strokes,
+  // geometries define an object's shape, and materials define an object's
+  // appearance (generally how it responds to light).
+
+  // We're creating a sphere with a radius of 10, and 32 faces both horizontally
+  // and vertically, so it looks nice and round. We're using a Lambert material,
+  // which gives the world a matte finish (you could use phong for a shinier, 
+  // more marble like finish if you want). Because this wouldn't be literally
+  // hello world with just a sphere, we use image utilities to create a texture
+  // map for the material from a jpeg.  Then we just make the mesh out of the 
+  // geometry and material.
+
+  var worldGeo = new THREE.SphereGeometry(10, 32, 32);
+  var worldTexture = THREE.ImageUtils.loadTexture('img/earth-8k.jpg');
+  var worldMat = new THREE.MeshLambertMaterial({map: worldTexture});
+  world = new THREE.Mesh(worldGeo, worldMat);
+
+  //////////////////////////
   //       Lights         //
   //////////////////////////
 
@@ -136,24 +158,6 @@ function createObjects() {
   // to get a sense of how ambient lights work.
 
   var ambientLight = new THREE.AmbientLight(0x171717);
-
-  // Now we get to make our world 3d object. Every 3d object is made of two
-  // components: a geometry and a material. In the broadest of strokes,
-  // geometries define an object's shape, and materials define an object's
-  // appearance (generally how it responds to light).
-
-  // We're creating a sphere with a radius of 10, and 32 faces both horizontally
-  // and vertically, so it looks nice and round. We're using a Lambert material,
-  // which gives the world a matte finish (you could use phong for a shinier, 
-  // more marble like finish if you want). Because this wouldn't be literally
-  // hello world with just a sphere, we use image utilities to create a texture
-  // map for the material from a jpeg.  Then we just make the mesh out of the 
-  // geometry and material.
-
-  var worldGeo = new THREE.SphereGeometry(10, 32, 32);
-  var worldTexture = THREE.ImageUtils.loadTexture('img/earth-8k.jpg');
-  var worldMat = new THREE.MeshLambertMaterial({map: worldTexture});
-  world = new THREE.Mesh(worldGeo, worldMat);
 
   // Finally we just add the lights and the world to the scene.
 
