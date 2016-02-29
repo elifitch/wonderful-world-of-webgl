@@ -4,4 +4,4 @@ A series of WebGL lessons & tutorials, using the magnificent three.js, designed 
 
 ## Branches
 
-The master branch is a blank canvas, the solutions branch has completed and fully commented examples.
+The master branch is a blank canvas, the solutions branch has completed and fully commented examples (wip).
